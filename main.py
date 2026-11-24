@@ -211,7 +211,6 @@ def ask_bot(question: str, history=None) -> str:
     return generate_answer(question, results, full_context, history=history)
 
 
-from api import app
 
 
 if __name__ == "__main__":
