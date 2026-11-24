@@ -7,16 +7,24 @@ from google import genai
 
 load_dotenv()
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
+_CLIENT = None
+
+
+def get_client():
+    global _CLIENT
+    if _CLIENT is None:
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise RuntimeError("GEMINI_API_KEY is not set in environment variables.")
+        _CLIENT = genai.Client(api_key=api_key)
+    return _CLIENT
+
 
 KNOWLEDGE_FOLDERS = [Path("knowledge"), Path("server/data")]
 CHAT_MODELS = [
-    "gemini-3.8-flash",
-    "gemini-3.5-flash-lite",
-    "gemini-3-flash-preview",
+    "gemini-2.5-flash",
     "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
 ]
 
 
@@ -74,7 +82,7 @@ def chunk_documents(documents, chunk_size=1000):
 
 
 def generate_embedding(text):
-    response = client.models.embed_content(
+    response = get_client().models.embed_content(
         model="gemini-embedding-001",
         contents=text
     )
@@ -165,7 +173,7 @@ Reply naturally as Ifrah:
 
     for model_name in CHAT_MODELS:
         try:
-            response = client.models.generate_content(
+            response = get_client().models.generate_content(
                 model=model_name,
                 contents=prompt,
                 config={
@@ -209,8 +217,6 @@ def ask_bot(question: str, history=None) -> str:
         return "My CV notes haven't been loaded yet. Please add your CV inside knowledge/knowledge.md."
     results = retrieve_chunks(question, chunks)
     return generate_answer(question, results, full_context, history=history)
-
-
 
 
 if __name__ == "__main__":

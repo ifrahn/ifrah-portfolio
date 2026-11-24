@@ -14,10 +14,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/")
+def health():
+    return {"status": "ok"}
+
+
 class ChatRequest(BaseModel):
     question: str = ""
     message: str = ""
     history: List[Dict[str, Any]] = []
+
 
 @app.post("/chat")
 def chat(req: ChatRequest):
