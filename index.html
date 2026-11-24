@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ifrah Naeem — Game Developer &amp; 3D Artist</title>
+  <meta name="description" content="Interactive 3D portfolio of Ifrah Naeem, Game Developer and 3D Artist from Karachi." />
+  <link rel="icon" href="assets/img/chatbot-avatar.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="importmap">
+    { "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body>
+  <canvas id="bg3d" aria-hidden="true"></canvas>
+  <canvas id="trailCanvas" aria-hidden="true"></canvas>
+
+  <div id="loader">
+    <div class="loader-ring"></div>
+    <p>ENTERING STUDIO</p>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="logo" href="#home">Ifrah<span>.</span></a>
+    <nav class="links" id="navlinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#journey">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">DARK</button>
+    <button class="icon-btn burger" id="burger" aria-label="Menu">MENU</button>
+  </header>
+
+  <main>
+    <!-- COMPACT INTERACTIVE HERO -->
+    <section id="home" class="hero">
+      <div class="hero-card reveal">
+        <div class="hero-pill">GAME DEVELOPER &middot; 3D ARTIST &middot; KARACHI</div>
+        <h1 class="display-name" id="heroName">Ifrah <em>Naeem</em></h1>
+        <p class="typed"><span id="typed"></span><i class="caret"></i></p>
+        <p class="lead" id="heroTag"></p>
+        <div class="cta">
+          <a class="btn primary" href="#projects">Explore Games &rarr;</a>
+          <a class="btn ghost" href="#contact">Contact Me</a>
+        </div>
+        <div class="interactive-controls">
+          <button type="button" class="mini-action" id="waveBtn">Wave Robot</button>
+          <button type="button" class="mini-action" id="spinBtn">360 Spin</button>
+          <button type="button" class="mini-action" id="burstBtn">Sparkle Burst</button>
+        </div>
+      </div>
+
+      <!-- Frameless 3D Robot Stage -->
+      <div class="hero-stage" id="heroStage" aria-label="Interactive 3D Blender Robot Model"></div>
+    </section>
+
+    <!-- KINETIC MARQUEE RIBBON -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>UNREAL ENGINE 5</span><span>&bull;</span>
+        <span>UNITY C#</span><span>&bull;</span>
+        <span>BLENDER 3D</span><span>&bull;</span>
+        <span>2ND PLACE GLOBAL GAME JAM KARACHI</span><span>&bull;</span>
+        <span>C++ &amp; SDL</span><span>&bull;</span>
+        <span>THREE.JS WEBGL</span><span>&bull;</span>
+        <span>UNREAL ENGINE 5</span><span>&bull;</span>
+        <span>UNITY C#</span><span>&bull;</span>
+        <span>BLENDER 3D</span><span>&bull;</span>
+        <span>2ND PLACE GLOBAL GAME JAM KARACHI</span><span>&bull;</span>
+        <span>C++ &amp; SDL</span><span>&bull;</span>
+        <span>THREE.JS WEBGL</span><span>&bull;</span>
+      </div>
+    </div>
+
+    <!-- BENTO ABOUT + STATS -->
+    <section id="about" class="section">
+      <div class="wrap bento-about">
+        <div class="bento-box prussian-box reveal">
+          <h2><span class="chip">01</span> About Me</h2>
+          <div id="aboutText"></div>
+        </div>
+        <div class="stats reveal" id="stats"></div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2><span class="chip">02</span> Skills &amp; Stack</h2>
+          <p class="sub">Interactive toolkit — click any tag to pop it.</p>
+        </div>
+        <div class="skill-grid" id="skillGrid"></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2><span class="chip">03</span> Game Projects</h2>
+          <div class="filters" id="filters"></div>
+        </div>
+        <div class="cards" id="cards"></div>
+      </div>
+    </section>
+
+    <!-- EDUCATION & ACHIEVEMENTS BENTO -->
+    <section id="journey" class="section">
+      <div class="wrap two">
+        <div class="bento-box dust-box reveal">
+          <h2><span class="chip">04</span> Education</h2>
+          <ol class="timeline" id="timeline"></ol>
+        </div>
+        <div class="bento-box rose-box reveal">
+          <h2><span class="chip">05</span> Achievements</h2>
+          <ul class="ach" id="ach"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="wrap two">
+        <div class="bento-box dust-box reveal">
+          <h2><span class="chip">06</span> Get in Touch</h2>
+          <p>Interested in collaborating on a game jam, internship, or 3D project? Send a message directly or reach out via email.</p>
+          <p style="margin-top:16px;"><strong>Location:</strong> Karachi, Pakistan</p>
+          <p><strong>Direct Email:</strong> <a id="mailLink" href="#"></a></p>
+        </div>
+
+        <div class="reveal">
+          <form id="contactForm" class="form" novalidate>
+            <div class="form-row">
+              <label>Name<input name="name" type="text" maxlength="80" autocomplete="name" required /></label>
+              <label>Email<input name="email" type="email" maxlength="120" autocomplete="email" required /></label>
+            </div>
+            <label>Subject<input name="subject" type="text" maxlength="120" required /></label>
+            <label>Message<textarea name="message" rows="3" maxlength="2000" required></textarea></label>
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="ts" id="ts" />
+            <div class="form-footer">
+              <button class="btn primary" id="sendBtn" type="submit">Send Message &rarr;</button>
+            </div>
+            <p class="status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Ifrah Naeem &middot; Karachi, Pakistan &middot; &copy; <span id="yr"></span></span>
+    <a id="liLink" href="#" target="_blank" rel="noopener">LinkedIn &rarr;</a>
+  </footer>
+
+  <!-- project modal -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <button class="icon-btn close" id="mClose" aria-label="Close">&times;</button>
+      <div id="mBody"></div>
+    </div>
+  </div>
+
+  <!-- FastAPI RAG Chatbot -->
+  <div id="chatbot" class="minimized">
+    <div class="chat-header">
+      <div>
+        <strong>Portfolio Assistant</strong>
+        <small>Ask about my games &amp; education</small>
+      </div>
+      <button id="minimizeChat" aria-label="Minimize chat">&minus;</button>
+    </div>
+    <div id="chatMessages">
+      <div class="bot-message">Hi! Ask me anything about Ifrah's games, 3D models, or education.</div>
+    </div>
+    <form id="chatForm">
+      <input type="text" id="chatInput" placeholder="Ask a question..." autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <button id="openChat" aria-label="Open chat"><img src="assets/img/chatbot-avatar.png" id="botFaceImg" alt="Robot Assistant" /></button>
+
+  <script>
+    setTimeout(() => {
+      const l = document.getElementById('loader');
+      if (l) l.classList.add('done');
+    }, 2000);
+  </script>
+  <script type="module" src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>
