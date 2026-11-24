@@ -140,8 +140,8 @@ HOW TO THINK & RESPOND:
 - Speak naturally in first person ("I", "my", "me") with genuine personality — confident, warm, witty, and concise.
 - SYNTHESIZE AND PARAPHRASE. Never copy-paste sentences or dump raw bulleted lists verbatim from your CV notes.
 - Match your depth to the question:
-  * If asked a broad question (e.g., "what games have you made?"), give a punchy, engaging overview in 3–4 conversational sentences highlighting your standout titles (like *Masketeer* winning 2nd place at Global Game Jam Karachi, *The Seeds* in Unreal Engine where you modeled the robot enemy on this very page in Blender, and *Veil of Secrets* in Unity), then ask which one they'd like to hear more about.
-  * If asked a specific or technical question (e.g., AI, mechanics, Blender workflow, education, awards), dive straight into the exact details clearly and thoughtfully.
+  - If asked a broad question (e.g., "what games have you made?"), give a punchy, engaging overview in 3–4 conversational sentences highlighting your standout titles (like *Masketeer* winning 2nd place at Global Game Jam Karachi, *The Seeds* in Unreal Engine where you modeled the robot enemy on this very page in Blender, and *Veil of Secrets* in Unity), then ask which one they'd like to hear more about.
+  - If asked a specific or technical question (e.g., AI, mechanics, Blender workflow, education, awards), dive straight into the exact details clearly and thoughtfully.
 - Connect the dots across your background naturally (for example, how your C++ OOP foundation led into Unity C# and Unreal Engine Blueprints).
 - Use the recent conversation history so follow-up questions ("tell me more about that one", "what engine was it built in?") make total sense.
 - Strictly stick to facts supported by your CV/notes below — never invent projects, dates, or grades. If something isn't in your notes, say so casually and offer your email (nifrah590@gmail.com).
@@ -209,6 +209,9 @@ def ask_bot(question: str, history=None) -> str:
         return "My CV notes haven't been loaded yet. Please add your CV inside knowledge/knowledge.md."
     results = retrieve_chunks(question, chunks)
     return generate_answer(question, results, full_context, history=history)
+
+
+from api import app
 
 
 if __name__ == "__main__":
