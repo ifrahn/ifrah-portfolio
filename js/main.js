@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { PROFILE, ABOUT, STATS, SKILLS, PROJECTS, EDUCATION, ACHIEVEMENTS } from './data.js?v=3';
 
-const API_BASE = window.API_BASE || '';
+const WEB3FORMS_KEY = '77bf3b1c-1407-4234-bdbb-852cc667c222';
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -567,7 +567,7 @@ function setupHeroModel() {
 function setupContact() {
   const form = $('#contactForm'), status = $('#formStatus'), btn = $('#sendBtn');
   if (!form) return;
-  $('#ts').value = Date.now();
+  if ($('#ts')) $('#ts').value = Date.now();
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const say = (msg, ok) => { status.textContent = msg; status.className = 'status ' + (ok ? 'ok' : 'err'); };
   form.addEventListener('submit', async (e) => {
@@ -582,18 +582,22 @@ function setupContact() {
     if (errs.length) { errs.forEach((n) => form.elements[n].classList.add('invalid')); return say('Please complete all highlighted fields (minimum 10 characters for message).', false); }
     btn.disabled = true; say('Sending message...', true);
     try {
-      const r = await fetch(`${API_BASE}/api/contact`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
+      const r = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          name: d.name.trim(),
+          email: d.email.trim(),
+          subject: `[Portfolio] ${d.subject.trim()}`,
+          message: d.message.trim(),
+        }),
+      });
       const j = await r.json().catch(() => ({}));
-      if (r.status === 503) {
-        const mailto = `mailto:${PROFILE.email}?subject=${encodeURIComponent(d.subject)}&body=${encodeURIComponent(`From: ${d.name} (${d.email})\n\n${d.message}`)}`;
-        window.location.href = mailto;
-        say('Opening your email client to send directly to ' + PROFILE.email + '.', true);
-        form.reset(); $('#ts').value = Date.now();
-        return;
-      }
-      if (!r.ok) throw new Error(j.error || 'Something went wrong.');
+      if (!r.ok || !j.success) throw new Error(j.message || 'Something went wrong.');
       say('Message sent successfully. Thank you for reaching out.', true);
-      form.reset(); $('#ts').value = Date.now();
+      form.reset();
+      if ($('#ts')) $('#ts').value = Date.now();
     } catch (err) {
       say(err.message === 'Failed to fetch' ? 'Unable to reach the mail server. Please email ' + PROFILE.email + ' directly.' : err.message, false);
     } finally { btn.disabled = false; }

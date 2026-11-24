@@ -5,6 +5,10 @@ const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 const chatMessages = document.getElementById("chatMessages");
 
+const CHAT_API_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000/chat"
+    : "https://main-ifrah-portfolio-ifrahs-workspace.light-cloud.io/chat";
+
 const chatHistory = [];
 
 minimizeChat.addEventListener("click", () => {
@@ -38,7 +42,7 @@ chatForm.addEventListener("submit", async (event) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/chat", {
+        const response = await fetch(CHAT_API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -59,7 +63,7 @@ chatForm.addEventListener("submit", async (event) => {
         if (chatHistory.length > 10) chatHistory.splice(0, 2);
     } catch (error) {
         console.error(error);
-        loadingMessage.textContent = "Could not reach the Python assistant on port 8000. Make sure uvicorn is running.";
+        loadingMessage.textContent = "Could not reach the assistant right now. Please try again in a moment.";
     }
     chatMessages.scrollTop = chatMessages.scrollHeight;
 });
